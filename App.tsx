@@ -5,10 +5,12 @@ import * as SplashScreen from 'expo-splash-screen'
 import * as Font from 'expo-font'
 import { Home } from './src/screens/Home'
 import { Result } from './src/screens/Result'
+import { getQuest } from './src/functions/storage'
 
 export default function App() {
 	const [activeScreen, setActiveScreen] = useState(0)
 	const [appIsReady, setAppIsReady] = useState(false)
+	const [isLoadedData, setIsLoadedData] = useState(false)
 
 	useEffect(() => {
 		async function prepare() {
@@ -39,11 +41,22 @@ export default function App() {
 		return null
 	}
 
+	const getData = async () => {
+		const quest = await getQuest()
+		if (quest) setActiveScreen(1)
+		setIsLoadedData(true)
+	}
+	getData()
+
 	return (
 		<View style={{flex: 1}} onLayout={onLayoutRootView}>
-			{activeScreen === 1 && <Result />}
-			{!activeScreen && <Home setActiveScreen={setActiveScreen} />}
-			<StatusBar style="auto" />
+			{isLoadedData &&
+				<>
+					{activeScreen === 1 && <Result />}
+					{!activeScreen && <Home setActiveScreen={setActiveScreen} />}
+					<StatusBar style="auto" />
+				</>
+			}
 		</View>
 	)
 }
