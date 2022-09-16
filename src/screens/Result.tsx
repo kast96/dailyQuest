@@ -51,18 +51,20 @@ export const Result = () => {
 		<View style={styles.container}>
 			{precent &&
 				<View style={styles.content}>
-					<AnimatedCircularProgress
-						size={200}
-						width={16}
-						fill={precent}
-						rotation={0}
-						lineCap="round"
-						tintColor={level?.color}
-						backgroundColor="#eee"
-						style={styles.progress}
-					>
-						{(fill) => (<Text style={[styles.progressValue, {color: level?.color}]}>{precent}%</Text>)}
-					</AnimatedCircularProgress>
+					<View style={styles.progressContainer}>
+						<AnimatedCircularProgress
+							size={200}
+							width={16}
+							fill={precent}
+							rotation={0}
+							lineCap="round"
+							tintColor={level?.color}
+							backgroundColor="#eee"
+							style={styles.progress}
+						>
+							{(fill) => (<Text style={[styles.progressValue, {color: level?.color}]}>{fill}%</Text>)}
+						</AnimatedCircularProgress>
+					</View>
 					{quest &&
 						<AnimatedViewFadeIn>
 							<Text style={styles.title}>{quest.title}</Text>
@@ -103,10 +105,15 @@ const styles = StyleSheet.create({
 		marginBottom: 40,
 	},
 
+	progressContainer: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+	},
+
 	progress: {
 		width: 200,
-		marginHorizontal: 'auto',
 		marginBottom: 40,
+		justifyContent: 'center',
 	},
 
 	progressValue: {
