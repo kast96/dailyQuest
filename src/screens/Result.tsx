@@ -27,29 +27,18 @@ export const Result = () => {
 	const getData = async () => {
 		const quest = await getQuest()
 
-		let precent = 0
-		let diff = null as KeysQuestsType | null
-		let questIndex = null
-
-		if (quest) {
-			precent = quest.precent
-			diff = quest.diff
-			questIndex = quest.index
-		} else {
-			precent = Math.floor(Math.random() * 99) + 1
-		}
+		let precent = quest?.precent || Math.floor(Math.random() * 99) + 1
 
 		const level = levels.find(item => precent > item.start)
 		if (!level) return
-		
 		setLevel(level)
-		
-		diff = diff || level.diff
 
+		let diff = quest?.diff || level.diff as KeysQuestsType
 		let questDiff = quests[diff]
-		questIndex = questIndex || Math.floor(Math.random() * questDiff.length)
+		let questIndex = quest?.index || Math.floor(Math.random() * questDiff.length)
 
 		await saveQuest(diff, questIndex, precent)
+		
 		setQuest(questDiff[questIndex])
 		setPrecent(precent)
 	}
