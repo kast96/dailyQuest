@@ -9,11 +9,25 @@ import { AnimatedViewFadeIn } from "../hoc/AnimatedView"
 export const Result = () => {
 	const [precent, setPrecent] = useState<number | null>(null)
 	const [quest, setQuest] = useState<QuestType | null>(null)
+	const [level, setLevel] = useState<levelType | null>(null)
+
+	type levelType = {
+		start: number
+		diff: KeysQuestsType
+		color: string
+	}
+
+	const levels = [
+		{start: 90, diff: 'ultra', color: '#333'},
+		{start: 70, diff: 'hard', color: '#EB340C'},
+		{start: 40, diff: 'medium', color: '#E9B602'},
+		{start: 0, diff: 'simple', color: '#38B000'}
+	] as Array<levelType>
 
 	const getData = async () => {
 		const quest = await getQuest()
 
-		let precent = null
+		let precent = 0
 		let diff = null as KeysQuestsType | null
 		let questIndex = null
 
@@ -23,11 +37,14 @@ export const Result = () => {
 			questIndex = quest.index
 		} else {
 			precent = Math.floor(Math.random() * 99) + 1
-			if (precent > 90) diff = 'ultra'
-			else if (precent > 70) diff = 'hard'
-			else if (precent > 40) diff = 'medium'
-			else diff = 'simple'
 		}
+
+		const level = levels.find(item => precent > item.start)
+		if (!level) return
+		
+		setLevel(level)
+		
+		diff = diff || level.diff
 
 		let questDiff = quests[diff]
 		questIndex = questIndex || Math.floor(Math.random() * questDiff.length)
@@ -51,12 +68,11 @@ export const Result = () => {
 						fill={precent}
 						rotation={0}
 						lineCap="round"
-						tintColor={colors.main}
-						onAnimationComplete={() => console.log('onAnimationComplete')}
+						tintColor={level?.color}
 						backgroundColor="#eee"
 						style={styles.progress}
 					>
-						{(fill) => (<Text style={styles.progressValue}>{precent}%</Text>)}
+						{(fill) => (<Text style={[styles.progressValue, {color: level?.color}]}>{precent}%</Text>)}
 					</AnimatedCircularProgress>
 					{quest &&
 						<AnimatedViewFadeIn>

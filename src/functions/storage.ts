@@ -37,6 +37,6 @@ type DataQuestType = {
 export const getQuest = async () => {
 	let quest = await getData('quest') as DataQuestType
 	const date = new Date()
-	if (date.toLocaleDateString("ru-RU") !== quest.date) return null
+	if (date.toLocaleDateString("ru-RU") !== quest?.date) return null
 	return quest
 }
