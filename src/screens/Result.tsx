@@ -62,7 +62,7 @@ export const Result = () => {
 							backgroundColor="#eee"
 							style={styles.progress}
 						>
-							{(fill) => (<Text style={[styles.progressValue, {color: level?.color}]}>{fill}%</Text>)}
+							{(fill) => (<Text style={[styles.progressValue, {color: level?.color}]}>{Math.round(fill)}%</Text>)}
 						</AnimatedCircularProgress>
 					</View>
 					{quest &&

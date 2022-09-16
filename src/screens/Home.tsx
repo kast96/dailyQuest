@@ -13,8 +13,8 @@ export const Home : FC<PropsType> = ({setActiveScreen}) => {
 		<View style={styles.container}>
 			<View style={styles.content}>
 				<Image style={styles.logo} source={logo} />
-				<Text style={styles.title}>Название проекта</Text>
-				<Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis</Text>
+				<Text style={styles.title}>Новое задание</Text>
+				<Text style={styles.description}>{'Тебе доступно новое задание\nНе забывай заходить в приложение и получать задания каждый день'}</Text>
 				<Button title="Начать" onPress={() => setActiveScreen(1)} />
 			</View>
 		</View>
